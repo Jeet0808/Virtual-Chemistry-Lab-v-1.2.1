@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titration Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            background-color: #fff;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #pHDisplay {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+
+        #indicatorDisplay {
+            margin-top: 10px;
+        }
+
+        .button {
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        #equivalencePoint {
+            font-size: 1.2em;
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Titration Simulation</h1>
+<canvas id="titrationCanvas" width="600" height="400"></canvas>
+
+<div id="controls">
+    <button class="button" id="addTitrantBtn">Add Titrant</button>
+    <button class="button" id="removeTitrantBtn">Remove Titrant</button>
+    <button class="button" id="resetBtn">Reset</button>
+    <div id="pHDisplay">pH: 0</div>
+    <div id="indicatorDisplay">Indicator: Red (Acidic)</div>
+</div>
+
+<div id="equivalencePoint"></div>
+
+<script>
+    // Constants
+    const acidConcentration = 0.1;  // Molarity of HCl (strong acid)
+    const baseConcentration = 0.1;  // Molarity of NaOH (strong base)
+    const volumeAcid = 50;  // Volume of acid in mL (50 mL)
+    const equivalenceVolume = volumeAcid * (acidConcentration / baseConcentration);  // Equivalence point volume in mL
+
+    let volumeTitrantAdded = 0; // Volume of titrant (NaOH) added in mL
+    let pH = 0;
+    let isTitrating = false;
+
+    // Get canvas and context for drawing
+    const canvas = document.getElementById('titrationCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Draw the titration curve
+    function drawTitrationCurve() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate pH based on the current volume of titrant added
+        pH = calculatepH(volumeTitrantAdded);
+
+        // Draw titration curve
+        ctx.beginPath();
+        ctx.moveTo(50, 350);
+
+        const step = canvas.width / 100;
+        for (let i = 0; i <= 100; i++) {
+            const x = i * step;
+            const y = 350 - (calculatepH(i) * 30);  // Scale pH to fit canvas height (pH ~ 0 to 14)
+            ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = "#000";
+        ctx.stroke();
+        
+        // Draw the point where the titrant is added
+        const titrantX = volumeTitrantAdded * step / 100;
+        const titrantY = 350 - (pH * 30);
+        ctx.fillStyle = 'blue';
+        ctx.beginPath();
+        ctx.arc(titrantX, titrantY, 5, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Show pH and indicator color
+        updateIndicator(pH);
+        displaypH(pH);
+    }
+
+    // pH calculation as titrant is added (simplified model)
+    function calculatepH(volumeBaseAdded) {
+        const molesAcid = acidConcentration * (volumeAcid / 1000); // moles of acid (HCl)
+        const molesBase = baseConcentration * (volumeBaseAdded / 1000); // moles of base (NaOH)
+
+        if (molesAcid > molesBase) {
+            // Excess acid (pH < 7)
+            const excessAcid = molesAcid - molesBase;
+            return -Math.log10(excessAcid / (volumeAcid + volumeBaseAdded) * 1000); // Approximate pH for excess acid
+        } else if (molesBase > molesAcid) {
+            // Excess base (pH > 7)
+            const excessBase = molesBase - molesAcid;
+            return 14 - (-Math.log10(excessBase / (volumeAcid + volumeBaseAdded) * 1000)); // Approximate pH for excess base
+        } else {
+            // Equivalence point (pH ≈ 7 for strong acid-strong base)
+            return 7;
+        }
+    }
+
+    // Update the pH display and color indicator
+    function displaypH(pH) {
+        const pHDisplay = document.getElementById('pHDisplay');
+        pHDisplay.textContent = pH: ${pH.toFixed(2)};
+    }
+
+    // Update indicator color based on pH
+    function updateIndicator(pH) {
+        const indicatorDisplay = document.getElementById('indicatorDisplay');
+        if (pH < 4.5) {
+            indicatorDisplay.textContent = 'Indicator: Red (Acidic)';
+            indicatorDisplay.style.color = 'red';
+        } else if (pH > 8.5) {
+            indicatorDisplay.textContent = 'Indicator: Purple (Basic)';
+            indicatorDisplay.style.color = 'purple';
+        } else {
+            indicatorDisplay.textContent = 'Indicator: Colorless (Neutral)';
+            indicatorDisplay.style.color = 'black';
+        }
+    }
+
+    // Event Listener for adding titrant
+    document.getElementById('addTitrantBtn').addEventListener('click', function () {
+        if (volumeTitrantAdded < 100) {
+            volumeTitrantAdded += 1;
+            drawTitrationCurve();
+        }
+        if (volumeTitrantAdded >= equivalenceVolume) {
+            document.getElementById('equivalencePoint').textContent = "Equivalence Point Reached!";
+        }
+    });
+
+    // Event Listener for removing titrant
+    document.getElementById('removeTitrantBtn').addEventListener('click', function () {
+        if (volumeTitrantAdded > 0) {
+            volumeTitrantAdded -= 1;
+            drawTitrationCurve();
+        }
+        if (volumeTitrantAdded < equivalenceVolume) {
+            document.getElementById('equivalencePoint').textContent = "";
+        }
+    });
+
+    // Event Listener for resetting the titration
+    document.getElementById('resetBtn').addEventListener('click', function () {
+        volumeTitrantAdded = 0;
+        document.getElementById('equivalencePoint').textContent = "";
+        drawTitrationCurve();
+    });
+
+    // Initial draw
+    drawTitrationCurve();
+</script>
+
+</body>
+</html>

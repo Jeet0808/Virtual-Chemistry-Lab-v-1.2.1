@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiments</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(255, 255, 255);
+
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+
+        .experiment {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #000000;
+        }
+
+        .experiment h2 {
+            color: #ffffff;
+        }
+
+        .calculator {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #eef;
+            border-radius: 5px;
+        }
+
+        .calculator label,
+        .calculator input {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .calculator input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .calculator button {
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 10px;
+            color: #000000;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-top: 30px;
+            text-align: center;
+            color: #65b2a3;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        h3 {
+            text-align: center;
+            color: #0c3fb8;
+        }
+
+        #hardnessForm {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            background-color: #fff;
+        }
+
+        #hardnessForm h3 {
+            color: #ffffff;
+        }
+
+        .calculator {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #eef;
+            border-radius: 5px;
+            color: #000000;
+        }
+
+        #hardnessForm label,
+        .calculator input {
+            display: block;
+            margin: 5px 0;
+        }
+
+        #hardnessForm input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        #hardnessForm button {
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 10px;
+            color: hsl(0, 37%, 62%);
+            font-weight: bold;
+        }
+
+        .lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            pointer-events: none;
+        }
+
+        .line {
+            position: relative;
+            width: 1px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+            animation: drop 7s infinite cubic-bezier(0.4, 0.26, 0, 0.97);
+        }
+
+        /* Animating 30 lines with unique delays */
+        .line:nth-child(1)::after {
+            animation-delay: 1s;
+        }
+
+        .line:nth-child(2)::after {
+            animation-delay: 1.5s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 2s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 2.5s;
+        }
+
+        .line:nth-child(5)::after {
+            animation-delay: 3s;
+        }
+
+        .line:nth-child(6)::after {
+            animation-delay: 3.5s;
+        }
+
+        .line:nth-child(7)::after {
+            animation-delay: 4s;
+        }
+
+        .line:nth-child(8)::after {
+            animation-delay: 4.5s;
+        }
+
+        .line:nth-child(9)::after {
+            animation-delay: 5s;
+        }
+
+        .line:nth-child(10)::after {
+            animation-delay: 5.5s;
+        }
+
+        /* Add more as needed */
+
+        @keyframes drop {
+            0% {
+                top: -150%;
+            }
+
+            100% {
+                top: 150%;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <h1>Experiments</h1>
+
+    <!-- Experiment: Total Hardness of Water Sample -->
+    <div class="experiment">
+        <h2>Experiment No.1: To Determine Total Hardness of Water Sample in PPM</h2>
+        <p><strong>Objective:</strong> To determine the total hardness of a water sample in parts per million (ppm)
+            using EDTA as a titrant.</p>
+        <p><strong>Description:</strong> In this experiment, the hardness of a water sample is determined by titrating
+            it with a standard EDTA solution. The total hardness is caused by dissolved calcium and magnesium ions, and
+            the amount of EDTA used helps calculate the hardness in ppm.</p>
+
+        <h3>Calculation:</h3>
+        <p>The total hardness in ppm is calculated using the formula:</p>
+        <pre>
+            Hardness (ppm) = (Volume of EDTA used x Concentration of EDTA x 1000) / Volume of Water Sample
+        </pre>
+
+        <!-- Calculation Form -->
+        <h3>Enter the values for calculation:</h3>
+        <form class="calculator">
+            <label for="edtaVolume">Volume of EDTA used (mL):</label>
+            <input type="number" id="edtaVolume" required>
+            <br><br>
+
+            <label for="edtaConcentration">Concentration of EDTA (mol/L):</label>
+            <input type="number" id="edtaConcentration" step="any" required>
+            <br><br>
+
+            <label for="waterSampleVolume">Volume of Water Sample (mL):</label>
+            <input type="number" id="waterSampleVolume" required>
+            <br><br>
+
+            <button type="button" onclick="calculateHardness()">Calculate Hardness (ppm)</button>
+            <p id="p1"></p>
+            <p id="result1"></p>
+        </form>
+    </div>
+
+    <!-- Experiment: Determination of Mixed Alkalinity -->
+    <div class="experiment">
+        <h2>Experiment No. 2: Determination of Mixed Alkalinity in a Water Sample</h2>
+        <p><strong>Objective:</strong> To determine the mixed alkalinity (hydroxide, carbonate, and bicarbonate) in a
+            given water sample using titration with phenolphthalein and methyl orange as indicators.</p>
+
+        <h3>Calculation:</h3>
+        <p>The alkalinity is calculated based on the volume of acid used in the titration. The formula is as follows:
+        </p>
+        <pre>
+            P-Alkalinity = (Volume of Acid x Normality of Acid x 1000) / Volume of Sample
+            M-Alkalinity = (Volume of Acid x Normality of Acid x 1000) / Volume of Sample
+        </pre>
+
+        <!-- Calculation Form -->
+        <form class="calculator">
+            <label for="phenolVolume">Volume of Acid (Va) for Phenolphthalein Titration (mL):</label>
+            <input type="number" id="phenolVolume" required>
+
+            <label for="methylVolume">Volume of Acid (Va') for Methyl Orange Titration (mL):</label>
+            <input type="number" id="methylVolume" required>
+
+            <label for="acidNormality">Normality of Acid (Na):</label>
+            <input type="number" id="acidNormality" step="any" value="0.02" required>
+
+            <label for="sampleVolume">Volume of Water Sample (Vs) (mL):</label>
+            <input type="number" id="sampleVolume" required>
+
+            <button type="button" onclick="calculateAlkalinity()">Calculate Alkalinity</button>
+        </form>
+
+        <h3>Results</h3>
+        <p class="result" id="phenolAlkalinityResult">P-Alkalinity (as CaCO₃): </p>
+        <p class="result" id="methylAlkalinityResult">M-Alkalinity (as CaCO₃): </p>
+    </div>
+
+    <!-- Experiment: Cleveland Open-Cup Apparatus Experiment -->
+    <div class="experiment">
+        <h2>Experiment No. 3: Cleveland Open-Cup Apparatus Experiment</h2>
+        <p><strong>Aim:</strong> To determine the flash point and fire point of petroleum products and other flammable
+            liquids using the Cleveland Open-Cup Apparatus.</p>
+
+        <h3>Calculation:</h3>
+        <p>The flash point and fire point are calculated based on the temperatures at which the liquid ignites and
+            maintains combustion. The formula is as follows:</p>
+        <pre>
+            Flash Point (°C) = Measured Temperature
+            Fire Point (°C) = Measured Temperature
+        </pre>
+
+        <!-- Calculation Form -->
+        <div class="calculator">
+            <form id="flashFireForm">
+                <label for="flashPoint">Enter Flash Point Temperature (°C):</label>
+                <input type="number" id="flashPoint" required>
+
+                <label for="firePoint">Enter Fire Point Temperature (°C):</label>
+                <input type="number" id="firePoint" required>
+
+                <button type="button" onclick="calculatePoints()">Calculate</button>
+            </form>
+            <p class="result" id="result2"></p>
+        </div>
+    </div>
+
+    <!-- Experiment: Pensky-Martens Closed-Cup Flash Point -->
+    <div class="experiment">
+        <h2>Experiment No. 4: Pensky-Martens Closed-Cup Flash Point Calculation</h2>
+        <p><strong>Aim:</strong> To determine the flash point of volatile substances in a closed environment.</p>
+
+        <h3>Calculation:</h3>
+        <p>The flash point is determined based on the time and temperature change during the heating process. The
+            formula is:</p>
+        <pre>
+            Flash Point (°C) = Initial Temperature + (Heating Rate x Time to Flash)
+        </pre>
+
+        <!-- Calculation Form -->
+        <form class="calculator">
+            <label for="initialTemp">Initial Temperature (°C):</label>
+            <input type="number" id="initialTemp" required>
+
+            <label for="heatingRate">Heating Rate (°C per minute):</label>
+            <input type="number" id="heatingRate" required>
+
+            <label for="timeToFlash">Time until Flash Observed (minutes):</label>
+            <input type="number" id="timeToFlash" required>
+
+            <button type="button" onclick="calculateFlashPoint()">Calculate Flash Point</button>
+        </form>
+        <p class="result" id="result3"></p>
+    </div>
+
+    <!-- Experiment: Moisture Content in Coal Sample -->
+    <div class="experiment">
+        <h2>Experiment No. 5: Moisture Content in Coal Sample Calculation</h2>
+        <p><strong>Aim:</strong> To determine the moisture content in a coal sample using proximate analysis.</p>
+
+        <h3>Calculation:</h3>
+        <p>The moisture content in the coal sample is calculated using the following formula:</p>
+        <pre>
+            Moisture Content (%) = ((Weight of Crucible + Coal - Weight of Crucible after Heating) / (Weight of Crucible + Coal)) x 100
+        </pre>
+
+        <!-- Calculation Form -->
+        <form class="calculator">
+            <label for="emptyCrucibleWeight">Weight of Empty Crucible (g):</label>
+            <input type="number" id="emptyCrucibleWeight" required>
+
+            <label for="initialCoalWeight">Weight of Crucible + Coal Sample (g):</label>
+            <input type="number" id="initialCoalWeight" required>
+
+            <label for="finalWeight">Weight of Crucible + Coal after Heating (g):</label>
+            <input type="number" id="finalWeight" required>
+
+            <button type="button" onclick="calculateMoistureContent()">Calculate Moisture Content (%)</button>
+        </form>
+        <p class="result" id="result4"></p>
+    </div>
+
+    <!-- Experiment: Redwood Viscometer Viscosity -->
+    <div class="experiment">
+        <h2>Experiment No. 6: Redwood Viscometer Viscosity Calculation</h2>
+        <p><strong>Aim:</strong> To determine the kinematic viscosity and absolute viscosity of the given lubricating
+            oil at different temperatures using Redwood Viscometer.</p>
+
+        <h3>Calculation:</h3>
+        <p>The kinematic viscosity is calculated using the following formula:</p>
+        <pre>
+            Kinematic Viscosity = Time Taken (Redwood Seconds) x Oil Density
+        </pre>
+
+        <!-- Calculation Form -->
+        <form class="calculator">
+            <label for="redwoodSeconds">Time Taken (Redwood Seconds):</label>
+            <input type="number" id="redwoodSeconds" required>
+
+            <label for="oilDensity">Density of Oil (g/cm³):</label>
+            <input type="number" step="0.001" id="oilDensity" required>
+
+            <button type="button" onclick="calculateViscosity()">Calculate Viscosities</button>
+        </form>
+        <p class="result" id="result5"></p>
+    </div>
+
+
+
+    <div class="experiment">
+        <h2>Experiment No. 7: Aniline Point of Lubricating Oil</h2>
+        <p><strong>Aim:</strong> To determine the aniline point of a given sample of lubricating oil, which helps
+            evaluate the oil’s aromatic content and predict its solubility and compatibility with other materials.</p>
+            
+            <h3>Calculation:</h3>
+    <p><strong>Formula:</strong> Aniline Point = Temperature (°C) at which oil and aniline mix completely.</p>
+    
+
+     
+        <form class="calculator">
+            <label for="oilVolume">Volume of Lubricating Oil (ml):</label>
+            <input type="number" id="oilVolume" required value="10">
+            
+            <label for="anilineVolume">Volume of Aniline (ml):</label>
+            <input type="number" id="anilineVolume" required value="10">
+            
+            <label for="miscibilityTemp">Temperature (°C) at Miscibility:</label>
+            <input type="number" id="miscibilityTemp" required>
+            
+            <button type="button" onclick="calculateAnilinePoint()">Calculate Aniline Point</button>
+        </form>
+        <p class="result" id="result6"></p>
+    </div>
+    
+    <div class="experiment">
+        <h2>Experiment No. 8: Cone Penetrometer</h2>
+        <p><strong>Aim:</strong> To determine the penetration number of a specific grease sample using a cone
+            penetrometer.</p>
+    
+
+    <h3>Observation:</h3>
+    <p><strong>Formula:</strong> Average Penetration = (Penetration Value 1 + Penetration Value 2 + Penetration Value 3) / 3</p>
+      
+
+        <form class="calculator">
+            <label for="pen1">Enter Penetration Value 1 (mm):</label>
+            <input type="number" id="pen1" required>
+    
+            <label for="pen2">Enter Penetration Value 2 (mm):</label>
+            <input type="number" id="pen2" required>
+    
+            <label for="pen3">Enter Penetration Value 3 (mm):</label>
+            <input type="number" id="pen3" required>
+    
+            <button type="button" onclick="calculateAverage()">Submit</button>
+        </form>
+    
+        <p class="result" id="result8"></p>
+    </div>
+    
+    <br>
+
+    <hr>
+    <!-- Some basic experiments -->
+    <h2>"Some basic experiments"</h2>
+
+    <!-- Experiment 1 -->
+    <div class="experiment">
+        <h2>Experiment 1: Density Calculation</h2>
+        <p><strong>Objective:</strong> Calculate the density of an object using mass and volume.</p>
+        <div class="calculator">
+            <h3>Calculate Density</h3>
+            <label for="mass">Enter Mass (g):</label>
+            <input type="number" id="mass" step="0.1">
+            <label for="volume">Enter Volume (cm³):</label>
+            <input type="number" id="volume" step="0.1">
+            <button onclick="calculateDensity()">Calculate Density</button>
+            <p class="result" id="densityResult"></p>
+        </div>
+    </div>
+
+    <!-- Experiment 2 -->
+    <div class="experiment">
+        <h2>Experiment 2: Measuring the pH of Common Household Solutions</h2>
+        <div class="calculator">
+            <h3>Determine pH Level</h3>
+            <label for="solutionPH">Enter Measured pH:</label>
+            <input type="number" id="solutionPH" step="0.1">
+            <button onclick="determinePH()">Determine pH Level</button>
+            <p class="result" id="pHResult"></p>
+        </div>
+    </div>
+
+    <!-- Experiment 3 -->
+    <div class="experiment">
+        <h2>Experiment 3: Determining the Boiling Point of Water</h2>
+        <div class="calculator">
+            <h3>Check Boiling Point</h3>
+            <label for="temperature">Enter Measured Temperature (°C):</label>
+            <input type="number" id="temperature" step="0.1">
+            <button onclick="checkBoilingPoint()">Check Boiling Point</button>
+            <p class="result" id="boilingPointResult"></p>
+        </div>
+    </div>
+
+    <!-- Experiment 4 -->
+    <div class="experiment">
+        <h2>Experiment 4: Neutralization Reaction - Acid and Base</h2>
+        <p><strong>Objective:</strong> Determine the amount of base needed to neutralize a given amount of acid.</p>
+        <div class="calculator">
+            <h3>Calculate Required Base</h3>
+            <label for="acidAmount">Enter Acid Amount (mL):</label>
+            <input type="number" id="acidAmount" step="0.1">
+            <label for="acidConcentration">Enter Acid Concentration (M):</label>
+            <input type="number" id="acidConcentration" step="0.1">
+            <label for="baseConcentration">Enter Base Concentration (M):</label>
+            <input type="number" id="baseConcentration" step="0.1">
+            <button onclick="calculateBaseVolume()">Calculate Base Volume</button>
+            <p class="result" id="baseVolumeResult"></p>
+        </div>
+    </div>
+
+
+    <script>
+        function calculateHardness() {
+            var edtaVolume = parseFloat(document.getElementById('edtaVolume').value);
+            var edtaConcentration = parseFloat(document.getElementById('edtaConcentration').value);
+            var waterSampleVolume = parseFloat(document.getElementById('waterSampleVolume').value);
+
+            if (isNaN(edtaVolume) || isNaN(edtaConcentration) || isNaN(waterSampleVolume) || edtaVolume <= 0 || edtaConcentration <= 0 || waterSampleVolume <= 0) {
+                document.getElementById('result1').innerText = "Please enter valid values in all fields.";
+                return;
+            }
+
+            var hardness = (edtaVolume * edtaConcentration * 1000) / waterSampleVolume;
+            document.getElementById('result1').innerText = "The total hardness of the water sample is " + hardness.toFixed(2) + " ppm.";
+        }
+
+        function calculateDensity() {
+            const mass = parseFloat(document.getElementById('mass').value);
+            const volume = parseFloat(document.getElementById('volume').value);
+            if (!mass || !volume) {
+                document.getElementById('densityResult').textContent = 'Please enter valid values for mass and volume.';
+                return;
+            }
+            const density = mass / volume;
+            document.getElementById('densityResult').textContent = `Density: ${density.toFixed(2)} g/cm³`;
+        }
+
+        function determinePH() {
+            const pH = parseFloat(document.getElementById('solutionPH').value);
+            if (!pH) {
+                document.getElementById('pHResult').textContent = 'Please enter a valid pH value.';
+                return;
+            }
+            if (pH < 7) {
+                document.getElementById('pHResult').textContent = 'Solution is acidic.';
+            } else if (pH > 7) {
+                document.getElementById('pHResult').textContent = 'Solution is basic.';
+            } else {
+                document.getElementById('pHResult').textContent = 'Solution is neutral.';
+            }
+        }
+
+        function checkBoilingPoint() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            if (temperature >= 100) {
+                document.getElementById('boilingPointResult').textContent = 'Water has boiled.';
+            } else {
+                document.getElementById('boilingPointResult').textContent = 'Water has not boiled yet.';
+            }
+        }
+
+        function calculateBaseVolume() {
+            const acidAmount = parseFloat(document.getElementById('acidAmount').value);
+            const acidConcentration = parseFloat(document.getElementById('acidConcentration').value);
+            const baseConcentration = parseFloat(document.getElementById('baseConcentration').value);
+
+            if (!acidAmount || !acidConcentration || !baseConcentration) {
+                document.getElementById('baseVolumeResult').textContent = 'Please enter valid values.';
+                return;
+            }
+
+            const baseVolume = (acidAmount * acidConcentration) / baseConcentration;
+            document.getElementById('baseVolumeResult').textContent = `Required base volume: ${baseVolume.toFixed(2)} mL`;
+        }
+
+        function calculateAlkalinity() {
+            // Retrieve input values
+            const phenolVolume = parseFloat(document.getElementById("phenolVolume").value);
+            const methylVolume = parseFloat(document.getElementById("methylVolume").value);
+            const acidNormality = parseFloat(document.getElementById("acidNormality").value);
+            const sampleVolume = parseFloat(document.getElementById("sampleVolume").value);
+
+            // Calculate P-Alkalinity
+            const pAlkalinity = (phenolVolume * acidNormality * 1000) / sampleVolume;
+            document.getElementById("phenolAlkalinityResult").textContent = `P-Alkalinity (as CaCO₃): ${pAlkalinity.toFixed(2)} mg/L`;
+
+            // Calculate M-Alkalinity
+            const mAlkalinity = (methylVolume * acidNormality * 1000) / sampleVolume;
+            document.getElementById("methylAlkalinityResult").textContent = `M-Alkalinity (as CaCO₃): ${mAlkalinity.toFixed(2)} mg/L`;
+        }
+
+        function calculatePoints() {
+            // Get values
+            const flashPoint = parseFloat(document.getElementById('flashPoint').value);
+            const firePoint = parseFloat(document.getElementById('firePoint').value);
+
+            // Validate inputs
+            if (isNaN(flashPoint) || isNaN(firePoint) || flashPoint <= 0 || firePoint <= 0) {
+                document.getElementById('result2').innerText = "Please enter valid temperatures for both Flash Point and Fire Point.";
+                return;
+            }
+
+            // Comparison for educational purposes
+            let resultMessage = `Flash Point Temperature: ${flashPoint}°C\nFire Point Temperature: ${firePoint}°C\n`;
+
+            if (flashPoint < firePoint) {
+                resultMessage += `The flash point is lower than the fire point, which is expected as the flash point is the lowest temperature at which vapors ignite, while the fire point allows sustained burning.`;
+            } else if (flashPoint === firePoint) {
+                resultMessage += `The flash point and fire point temperatures are the same, which is unusual. Please check your measurements.`;
+            } else {
+                resultMessage += `The flash point temperature is higher than the fire point, which contradicts the typical behavior of flammable liquids. Please verify the data.`;
+            }
+
+            // Display the result
+            document.getElementById('result2').innerText = resultMessage;
+        }
+
+        function calculateFlashPoint() {
+            const initialTemp = parseFloat(document.getElementById('initialTemp').value);
+            const heatingRate = parseFloat(document.getElementById('heatingRate').value);
+            const timeToFlash = parseFloat(document.getElementById('timeToFlash').value);
+
+            if (isNaN(initialTemp) || isNaN(heatingRate) || isNaN(timeToFlash) || initialTemp < 0 || heatingRate <= 0 || timeToFlash <= 0) {
+                document.getElementById('result3').innerText = "Please enter valid values in all fields.";
+                return;
+            }
+
+            const flashPoint = initialTemp + (heatingRate * timeToFlash);
+            document.getElementById('result3').innerText = "Flash Point: " + flashPoint.toFixed(2) + " °C";
+        }
+
+        function calculateMoistureContent() {
+            // Get input values
+            const emptyCrucible = parseFloat(document.getElementById('emptyCrucibleWeight').value);
+            const sampleWithCrucible = parseFloat(document.getElementById('initialCoalWeight').value);
+            const sampleAfterHeating = parseFloat(document.getElementById('finalWeight').value);
+
+            if (isNaN(emptyCrucible) || isNaN(sampleWithCrucible) || isNaN(sampleAfterHeating)) {
+                document.getElementById('result4').innerHTML = "Please enter valid numbers for all fields.";
+                return;
+            }
+
+            // Calculate the weight of coal sample and after heating
+            const coalSampleWeight = sampleWithCrucible - emptyCrucible;
+            const coalAfterHeatingWeight = sampleAfterHeating - emptyCrucible;
+
+            // Calculate Moisture Content
+            const moistureContent = ((coalSampleWeight - coalAfterHeatingWeight) / coalSampleWeight) * 100;
+
+            // Display result
+            document.getElementById('result4').innerHTML = `Moisture Content: ${moistureContent.toFixed(2)} %`;
+        }
+
+        function calculateViscosity() {
+            const redwoodSeconds = parseFloat(document.getElementById('redwoodSeconds').value);
+            const oilDensity = parseFloat(document.getElementById('oilDensity').value);
+
+            if (isNaN(redwoodSeconds) || isNaN(oilDensity) || redwoodSeconds <= 0 || oilDensity <= 0) {
+                document.getElementById('result5').innerText = "Please enter valid values in all fields.";
+                return;
+            }
+
+            // Kinematic Viscosity calculation (in centistokes, cSt)
+            const kinematicViscosity = 0.26 * redwoodSeconds - (1.73 / redwoodSeconds);
+
+            // Dynamic Viscosity calculation (in centipoise, cP)
+            const dynamicViscosity = kinematicViscosity * oilDensity;
+
+            document.getElementById('result5').innerHTML = `
+            <strong>Results:</strong><br>
+            Kinematic Viscosity: ${kinematicViscosity.toFixed(2)} cSt<br>
+            Dynamic Viscosity: ${dynamicViscosity.toFixed(2)} cP
+        `;
+        }
+
+        function calculateAnilinePoint() {
+            const miscibilityTemp = parseFloat(document.getElementById('miscibilityTemp').value);
+
+            if (isNaN(miscibilityTemp) || miscibilityTemp <= 0) {
+                document.getElementById('result6').innerText = "Please enter a valid temperature.";
+                return;
+            }
+
+            let resultText = `
+            <strong>Results:</strong><br>
+            The Aniline Point of the lubricating oil is: <strong>${miscibilityTemp.toFixed(2)} °C</strong>.
+            <br><br>
+            The aniline point indicates the aromatic content of the oil. Oils with lower aniline points are more aromatic and tend to have higher solvency properties, while oils with higher aniline points suggest a lower aromatic content. 
+            <br><br>
+            In this case, the observed aniline point of ${miscibilityTemp.toFixed(2)} °C suggests that the oil has ${miscibilityTemp < 80 ? "higher aromatic content" : "lower aromatic content"}.
+        `;
+
+            document.getElementById('result6').innerHTML = resultText;
+        }
+
+        function calculateAverage() {
+            const pen1 = parseFloat(document.getElementById('pen1').value);
+            const pen2 = parseFloat(document.getElementById('pen2').value);
+            const pen3 = parseFloat(document.getElementById('pen3').value);
+
+            if (isNaN(pen1) || isNaN(pen2) || isNaN(pen3)) {
+                document.getElementById('result8').innerText = "Please enter valid penetration values for all three measurements.";
+                return;
+            }
+
+            // Calculate average penetration value
+            const averagePenetration = (pen1 + pen2 + pen3) / 3;
+
+            // Display result
+            let resultText = `
+            <strong>Results:</strong><br>
+            The Penetration Values (in mm) are:<br>
+            1st Measurement: ${pen1.toFixed(2)} mm<br>
+            2nd Measurement: ${pen2.toFixed(2)} mm<br>
+            3rd Measurement: ${pen3.toFixed(2)} mm<br><br>
+            The average penetration number is: <strong>${averagePenetration.toFixed(2)} mm</strong><br><br>
+            The penetration number indicates the consistency of the grease. A higher penetration value suggests a softer grease, while a lower penetration value indicates a firmer grease.
+        `;
+
+            document.getElementById('result8').innerHTML = resultText;
+        }
+
+    </script>
+</body>
+
+</html>
